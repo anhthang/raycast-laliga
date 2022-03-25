@@ -1,5 +1,6 @@
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
 import CompetitionDropdown, {
   competitions,
 } from "./components/competition_dropdown";
@@ -58,10 +59,18 @@ export default function Fixture() {
                       ? `${match.home_team.nickname} - ${match.away_team.nickname}`
                       : `${match.home_team.nickname} ${match.home_score} - ${match.away_score} ${match.away_team.nickname}`
                   }
+                  icon={match.ball.image}
                   accessories={[
                     {
                       text: `${match.venue.name}, ${match.venue.city}`,
                       icon: "stadium.svg",
+                    },
+                    {
+                      text: format(
+                        new Date(match.date),
+                        "eee dd.MM.yyyy HH:mm"
+                      ),
+                      icon: Icon.Clock,
                     },
                   ]}
                   actions={
