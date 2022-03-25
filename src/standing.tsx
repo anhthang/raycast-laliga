@@ -105,12 +105,6 @@ export default function GetTables() {
           />
         );
       })}
-      {/* {tables.map((table) => {
-        return (
-          <List.Section key={table.gameWeek}>
-          </List.Section>
-        );
-      })} */}
     </List>
   );
 }

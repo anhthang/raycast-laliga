@@ -1,4 +1,4 @@
-export interface LaLiga {
+export interface LaLigaStanding {
   standings: Standing[];
 }
 
