@@ -1,5 +1,6 @@
 # LaLiga Changelog
 
-## [LaLiga] - 2022-03-24
+## [Initial Version] - 2022-03-24
 
-Initial Version
+- Added Standings
+- Added Results
