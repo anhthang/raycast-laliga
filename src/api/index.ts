@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { showToast, Toast } from "@raycast/api";
 import { LaLigaStanding, Standing } from "../types/standing";
 import { LaLigaMatch, Match } from "../types/match";
+import { LaLigaClub } from "../types/club";
 
 function showFailureToast() {
   showToast(
@@ -28,6 +29,26 @@ export const getCurrentGameWeek = async (competition: string) => {
     showFailureToast();
 
     return {};
+  }
+};
+
+export const getTeam = async (team: string) => {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `https://apim.laliga.com/public-service/api/v1/teams/${team}`,
+    headers: {
+      "Ocp-Apim-Subscription-Key": "c13c3a8e2f6b46da9c5c425cf61fab3e",
+    },
+  };
+
+  try {
+    const { data }: AxiosResponse<LaLigaClub> = await axios(config);
+
+    return data.team;
+  } catch (e) {
+    showFailureToast();
+
+    return undefined;
   }
 };
 
