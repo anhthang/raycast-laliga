@@ -54,24 +54,16 @@ export default function Fixture() {
               return (
                 <List.Item
                   key={match.id}
-                  title={
+                  title={format(new Date(match.date), "eee dd.MM.yyyy HH:mm")}
+                  subtitle={
                     match.status === "PreMatch"
                       ? `${match.home_team.nickname} - ${match.away_team.nickname}`
                       : `${match.home_team.nickname} ${match.home_score} - ${match.away_score} ${match.away_team.nickname}`
                   }
-                  icon={match.ball.image}
+                  icon={Icon.Clock}
                   accessories={[
-                    {
-                      text: `${match.venue.name}, ${match.venue.city}`,
-                      icon: "stadium.svg",
-                    },
-                    {
-                      text: format(
-                        new Date(match.date),
-                        "eee dd.MM.yyyy HH:mm"
-                      ),
-                      icon: Icon.Clock,
-                    },
+                    { text: `${match.venue.name}, ${match.venue.city}` },
+                    { icon: "stadium.svg" },
                   ]}
                   actions={
                     <ActionPanel>
