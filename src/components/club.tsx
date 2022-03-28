@@ -24,8 +24,15 @@ export default function ClubDetails(props: { slug: string }) {
         team
           ? json2md([
               { h1: team.name },
-              { p: team.address },
-              { img: { source: team.venue.image.url, title: team.venue.name } },
+              { p: team.club.address },
+              team.venue.image
+                ? {
+                    img: {
+                      source: team.venue.image.url,
+                      title: team.venue.name,
+                    },
+                  }
+                : { img: [] },
             ])
           : undefined
       }
@@ -34,7 +41,9 @@ export default function ClubDetails(props: { slug: string }) {
           <Detail.Metadata>
             <Detail.Metadata.Label
               title="Year of foundation"
-              text={format(new Date(team.foundation), "yyyy")}
+              text={
+                team.foundation ? format(new Date(team.foundation), "yyyy") : ""
+              }
             />
 
             <Detail.Metadata.Label

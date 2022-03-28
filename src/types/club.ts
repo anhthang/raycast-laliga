@@ -11,16 +11,16 @@ export interface Team {
   shortname: string;
   color: string;
   color_secondary: string;
-  shirt_style: string;
-  foundation: Date;
+  shirt_style?: string;
+  foundation?: Date;
   address: string;
   web: string;
   twitter: string;
   facebook: string;
-  instagram: string;
-  mail: string;
+  instagram?: string;
+  mail?: string;
   phone: string;
-  fax: string;
+  fax?: string;
   sprite_status: string;
   club: Club;
   venue: Venue;
@@ -47,8 +47,8 @@ export interface Club {
   instagram: string;
   mail: string;
   phone: string;
-  fax: string;
-  president: string;
+  fax?: string;
+  president?: string;
 }
 
 export interface Competition {
@@ -82,7 +82,7 @@ export interface Venue {
   capacity: number;
   address: string;
   country: Country;
-  image: Shield;
+  image?: Shield;
   timezone: string;
   city: string;
   slug: string;
