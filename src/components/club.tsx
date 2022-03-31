@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Action, ActionPanel, Detail } from "@raycast/api";
 import json2md from "json2md";
 import { getTeam } from "../api";
-import { Team } from "../types/club";
+import { Team } from "../types";
 import { format } from "date-fns";
 
 export default function ClubDetails(props: { slug: string }) {

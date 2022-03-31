@@ -1,12 +1,11 @@
 import { Action, ActionPanel, List, Icon, Image, Color } from "@raycast/api";
 import { useEffect, useState } from "react";
-import json2md from "json2md";
 import CompetitionDropdown, {
   competitions,
 } from "./components/competition_dropdown";
 import ClubDetails from "./components/club";
 import { getStandings } from "./api";
-import { Standing } from "./types/standing";
+import { Standing } from "./types";
 
 export default function GetTables() {
   const [standing, setStandings] = useState<Standing[]>([]);
@@ -22,25 +21,6 @@ export default function GetTables() {
       setLoading(false);
     });
   }, [competition]);
-
-  const club = (standing: Standing): json2md.DataObject => {
-    return [
-      { h1: standing.team.name },
-      { h2: "Stats" },
-      {
-        p: [
-          `Previous Position: ${standing.previous_position}`,
-          `Played: ${standing.played}`,
-          `Won: ${standing.won}`,
-          `Drawn: ${standing.drawn}`,
-          `Lost: ${standing.lost}`,
-          `Goals For: ${standing.goals_for}`,
-          `Goals Against: ${standing.goals_against}`,
-          `Goal Difference: ${standing.goal_difference}`,
-        ],
-      },
-    ];
-  };
 
   return (
     <List
@@ -80,10 +60,7 @@ export default function GetTables() {
               <ActionPanel>
                 <Action.Push
                   title="Show Club Details"
-                  icon={{
-                    source: `https://assets.laliga.com/assets/2019/06/07/small/${table.team.slug}.png`,
-                    fallback: "default.png",
-                  }}
+                  icon={Icon.Sidebar}
                   target={<ClubDetails slug={table.team.slug} />}
                 />
               </ActionPanel>

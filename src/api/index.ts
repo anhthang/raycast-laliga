@@ -1,8 +1,12 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { showToast, Toast } from "@raycast/api";
-import { LaLigaStanding, Standing } from "../types/standing";
-import { LaLigaMatch, Match } from "../types/match";
-import { LaLigaClub } from "../types/club";
+import {
+  LaLigaClub,
+  LaLigaMatch,
+  LaLigaStanding,
+  Match,
+  Standing,
+} from "../types";
 
 function showFailureToast() {
   showToast(

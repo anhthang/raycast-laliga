@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import CompetitionDropdown, {
   competitions,
 } from "./components/competition_dropdown";
-import { Match } from "./types/match";
+import { Match } from "./types";
 import { getCurrentGameWeek, getMatches } from "./api";
 
 interface Matchday {
