@@ -2,6 +2,11 @@ export interface LaLigaClub {
   team: Team;
 }
 
+export interface LaLigaClubs {
+  total: number;
+  teams: Team[];
+}
+
 export interface LaLigaStanding {
   standings: Standing[];
 }

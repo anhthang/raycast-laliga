@@ -19,6 +19,7 @@ export default function ClubDetails(props: { slug: string }) {
 
   return (
     <Detail
+      navigationTitle={team ? `${team.nickname} | LaLiga` : "LaLiga"}
       isLoading={loading}
       markdown={
         team
