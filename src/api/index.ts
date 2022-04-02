@@ -147,6 +147,7 @@ export const getSquad = async (team: string): Promise<Squad[]> => {
     },
     headers: {
       "Ocp-Apim-Subscription-Key": "c13c3a8e2f6b46da9c5c425cf61fab3e",
+      "Content-Language": "en",
     },
   };
 

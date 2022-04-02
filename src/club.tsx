@@ -42,9 +42,9 @@ export default function Club() {
             actions={
               <ActionPanel>
                 <Action.Push
-                  title="Show Club Details"
+                  title="Club Profile"
                   icon={Icon.Sidebar}
-                  target={<ClubDetails slug={club.slug} />}
+                  target={<ClubDetails {...club} />}
                 />
               </ActionPanel>
             }
