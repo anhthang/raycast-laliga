@@ -1,7 +1,8 @@
-import { List } from "@raycast/api";
+import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { getSquad } from "../api";
 import { Squad, Team } from "../types";
+import Player from "./player";
 
 const getFlagEmoji = (isoCode?: string) => {
   if (!isoCode) return "🏴";
@@ -50,7 +51,7 @@ export default function ClubSquad(props: Team) {
             key={member.id}
             title={member.person.name}
             subtitle={member.position.name}
-            icon={member.photos["002"]["64x64"]}
+            icon={member.photos["001"]["64x70"]}
             accessories={
               member.person.country
                 ? [
@@ -58,6 +59,15 @@ export default function ClubSquad(props: Team) {
                     { icon: getFlagEmoji(member.person.country.id) },
                   ]
                 : undefined
+            }
+            actions={
+              <ActionPanel>
+                <Action.Push
+                  title="Player Profile"
+                  icon={Icon.Sidebar}
+                  target={<Player {...member} />}
+                />
+              </ActionPanel>
             }
           />
         );
