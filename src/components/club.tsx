@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Action, ActionPanel, Detail } from "@raycast/api";
+import { Action, ActionPanel, Detail, Icon } from "@raycast/api";
 import json2md from "json2md";
 import { getTeam } from "../api";
 import { Team } from "../types";
 import { format } from "date-fns";
+import ClubSquad from "./squad";
 
 export default function ClubDetails(props: { slug: string }) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -88,6 +89,11 @@ export default function ClubDetails(props: { slug: string }) {
           <ActionPanel>
             <Action.OpenInBrowser
               url={`https://www.laliga.com/en-GB/clubs/${team.slug}`}
+            />
+            <Action.Push
+              title="Squad"
+              icon={Icon.Person}
+              target={<ClubSquad team={team.slug} />}
             />
           </ActionPanel>
         )
