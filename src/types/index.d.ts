@@ -91,7 +91,7 @@ export interface Club {
   shortname: string;
   selector_name: string;
   address: string;
-  foundation: Date;
+  foundation?: Date;
   web: string;
   twitter: string;
   facebook: string;

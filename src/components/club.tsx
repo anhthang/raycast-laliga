@@ -5,17 +5,19 @@ import { format } from "date-fns";
 import ClubSquad from "./squad";
 
 export default function ClubDetails(team: Team) {
+  const { club, venue } = team;
+
   return (
     <Detail
-      navigationTitle={`${team.nickname} | Club`}
+      navigationTitle={`${club.nickname} | Club`}
       markdown={json2md([
-        { h1: team.name },
-        { p: team.club.address },
-        team.venue.image
+        { h1: club.name },
+        { p: club.address },
+        venue.image
           ? {
               img: {
-                source: team.venue.image.url,
-                title: team.venue.name,
+                source: venue.image.url,
+                title: venue.name,
               },
             }
           : { img: [] },
@@ -29,37 +31,47 @@ export default function ClubDetails(team: Team) {
             }
           />
 
-          <Detail.Metadata.Label title="President" text={team.club.president} />
+          <Detail.Metadata.TagList title="Club Colors">
+            <Detail.Metadata.TagList.Item
+              text={team.color}
+              color={team.color}
+            />
+            {team.color_secondary && (
+              <Detail.Metadata.TagList.Item
+                text={team.color_secondary}
+                color={team.color_secondary}
+              />
+            )}
+          </Detail.Metadata.TagList>
 
-          <Detail.Metadata.Label title="Stadium" text={team.venue.name} />
+          <Detail.Metadata.Label title="President" text={club.president} />
+          <Detail.Metadata.Label title="Stadium" text={venue.name} />
+
           <Detail.Metadata.Link
             title="Official Website"
-            text={team.web}
-            target={team.web}
+            text={club.web}
+            target={club.web}
           />
           <Detail.Metadata.Separator />
-          {team.club.twitter && (
+          {club.twitter && (
             <Detail.Metadata.Link
               title="Twitter"
-              text={team.club.twitter}
-              target={`https://twitter.com/${team.club.twitter.replace(
-                "@",
-                ""
-              )}`}
+              text={club.twitter}
+              target={`https://twitter.com/${club.twitter.replace("@", "")}`}
             />
           )}
-          {team.club.facebook && (
+          {club.facebook && (
             <Detail.Metadata.Link
               title="Facebook"
-              text={team.club.facebook}
-              target={team.club.facebook}
+              text={club.facebook}
+              target={club.facebook}
             />
           )}
-          {team.club.instagram && (
+          {club.instagram && (
             <Detail.Metadata.Link
               title="Instagram"
-              text={team.club.instagram}
-              target={team.club.instagram}
+              text={club.instagram}
+              target={club.instagram}
             />
           )}
         </Detail.Metadata>
@@ -67,12 +79,12 @@ export default function ClubDetails(team: Team) {
       actions={
         <ActionPanel>
           <Action.OpenInBrowser
-            url={`https://www.laliga.com/en-GB/clubs/${team.slug}`}
+            url={`https://www.laliga.com/en-GB/clubs/${club.slug}`}
           />
           <Action.Push
             title="Squad"
             icon={Icon.Person}
-            target={<ClubSquad {...team} />}
+            target={<ClubSquad {...club} />}
           />
         </ActionPanel>
       }
