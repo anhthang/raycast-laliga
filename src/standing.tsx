@@ -53,7 +53,6 @@ export default function GetTables() {
             },
             tooltip: "Points",
           },
-          { icon, tooltip: `Previous Position: ${team.previous_position}` },
         ];
 
         if (!showStats) {
@@ -74,6 +73,7 @@ export default function GetTables() {
         return (
           <List.Item
             key={team.team.id}
+            icon={icon}
             title={team.position.toString()}
             subtitle={team.team.nickname}
             keywords={[team.team.nickname, team.team.shortname]}
