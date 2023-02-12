@@ -2,15 +2,15 @@ import { Grid, List } from "@raycast/api";
 
 const competitions = [
   {
-    title: "LaLiga Santander",
+    title: "La Liga",
     value: "laliga-santander",
   },
   {
-    title: "LaLiga SmartBank",
+    title: "Segunda División",
     value: "laliga-smartbank",
   },
   {
-    title: "Women's First Division",
+    title: "Liga F",
     value: "primera-division-femenina",
   },
 ];

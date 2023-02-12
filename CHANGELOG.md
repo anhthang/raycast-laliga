@@ -1,6 +1,12 @@
 # LaLiga Changelog
 
 ## [Improvements] - 2023-02-09
+
+- Live fixtures status
+- Fixtures & Results group by date
+
+## [Improvements] - 2023-02-09
+
 - Update Standings
 - Fix city name of stadium
 - Update extension icon
