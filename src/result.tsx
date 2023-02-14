@@ -82,7 +82,12 @@ export default function Fixture() {
 
                 const accessories: List.Item.Accessory[] = [
                   { text: match.venue.name },
-                  { icon: "stadium.svg" },
+                  {
+                    icon: {
+                      source: "stadium.svg",
+                      tintColor: Color.SecondaryText,
+                    },
+                  },
                 ];
 
                 return (
