@@ -15,12 +15,8 @@ import CompetitionDropdown from "./components/competition_dropdown";
 import { Match } from "./types";
 import { getCurrentGameWeek, getMatches } from "./api";
 
-interface Fixtures {
-  [key: string]: Match[];
-}
-
 export default function Fixture() {
-  const [fixtures, setFixtures] = useState<Fixtures>();
+  const [fixtures, setFixtures] = useState<Match[]>();
   const [competition, setCompetition] = useState<string>("");
   const [matchday, setMatchday] = useState<number>(0);
 
@@ -42,87 +38,98 @@ export default function Fixture() {
         style: Toast.Style.Animated,
       });
       getMatches(competition, matchday).then((data) => {
-        setFixtures({
-          ...fixtures,
-          [`Matchday ${matchday}`]: data,
-        });
+        setFixtures(data);
         showToast({
-          title: `Matchday ${matchday} Added`,
+          title: "Completed",
           style: Toast.Style.Success,
         });
       });
     }
   }, [matchday]);
 
+  const days = groupBy(fixtures, (m) => {
+    return format(new Date(m.date), "eee dd.MM.yyyy");
+  });
+
   return (
     <List
       throttle
       isLoading={!fixtures}
+      navigationTitle={
+        fixtures
+          ? `Matchday ${matchday} | Fixtures & Results`
+          : "Fixtures & Results"
+      }
       searchBarAccessory={
         <CompetitionDropdown selected={competition} onSelect={setCompetition} />
       }
     >
-      {Object.entries(fixtures || {}).map(([date, results]) => {
-        const days: Fixtures = groupBy(results, (m) => {
-          return format(new Date(m.date), "eee dd.MM.yyyy");
-        });
+      {Object.entries(days).map(([day, matches]) => {
+        return (
+          <List.Section key={day} title={day}>
+            {matches.map((match) => {
+              let icon: Image.ImageLike;
+              if (match.status.toLowerCase().includes("half")) {
+                icon = { source: Icon.Livestream, tintColor: Color.Red };
+              } else if (match.status === "FullTime") {
+                icon = { source: Icon.CheckCircle, tintColor: Color.Green };
+              } else {
+                icon = Icon.Clock;
+              }
 
-        return Object.entries(days).map(([day, matches]) => {
-          return (
-            <List.Section key={`${date} - ${day}`} title={`${date} - ${day}`}>
-              {matches.map((match) => {
-                let icon: Image.ImageLike;
-                if (match.status.toLowerCase().includes("half")) {
-                  icon = { source: Icon.Livestream, tintColor: Color.Red };
-                } else if (match.status === "FullTime") {
-                  icon = { source: Icon.CheckCircle, tintColor: Color.Green };
-                } else {
-                  icon = Icon.Clock;
-                }
-
-                const accessories: List.Item.Accessory[] = [
-                  { text: match.venue.name },
-                  {
-                    icon: {
-                      source: "stadium.svg",
-                      tintColor: Color.SecondaryText,
-                    },
+              const accessories: List.Item.Accessory[] = [
+                { text: match.venue.name },
+                {
+                  icon: {
+                    source: "stadium.svg",
+                    tintColor: Color.SecondaryText,
                   },
-                ];
+                },
+              ];
 
-                return (
-                  <List.Item
-                    key={match.id}
-                    title={format(new Date(match.date), "HH:mm")}
-                    subtitle={
-                      match.status === "PreMatch"
-                        ? `${match.home_team.nickname} - ${match.away_team.nickname}`
-                        : `${match.home_team.nickname} ${match.home_score} - ${match.away_score} ${match.away_team.nickname}`
-                    }
-                    icon={icon}
-                    accessories={accessories}
-                    actions={
-                      <ActionPanel>
-                        <Action.OpenInBrowser
-                          url={`https://www.laliga.com/en-GB/match/${match.slug}`}
-                        />
+              return (
+                <List.Item
+                  key={match.id}
+                  title={format(new Date(match.date), "HH:mm")}
+                  subtitle={
+                    match.status === "PreMatch"
+                      ? `${match.home_team.nickname} - ${match.away_team.nickname}`
+                      : `${match.home_team.nickname} ${match.home_score} - ${match.away_score} ${match.away_team.nickname}`
+                  }
+                  icon={icon}
+                  accessories={accessories}
+                  actions={
+                    <ActionPanel>
+                      <Action.OpenInBrowser
+                        url={`https://www.laliga.com/en-GB/match/${match.slug}`}
+                      />
+                      <ActionPanel.Section title="Matchday">
                         {matchday > 1 && (
                           <Action
-                            title="Load Previous Matchday"
-                            icon={Icon.MagnifyingGlass}
+                            title={`Matchday ${matchday - 1}`}
+                            icon={Icon.ArrowLeftCircle}
                             onAction={() => {
                               setMatchday(matchday - 1);
                             }}
                           />
                         )}
-                      </ActionPanel>
-                    }
-                  />
-                );
-              })}
-            </List.Section>
-          );
-        });
+                        {matchday < 38 && (
+                          <Action
+                            title={`Matchday ${matchday + 1}`}
+                            icon={Icon.ArrowRightCircle}
+                            onAction={() => {
+                              setMatchday(matchday + 1);
+                            }}
+                          />
+                        )}
+                      </ActionPanel.Section>
+                    </ActionPanel>
+                  }
+                />
+              );
+            })}
+          </List.Section>
+        );
       })}
     </List>
   );
