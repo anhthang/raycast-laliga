@@ -2,11 +2,11 @@ import { Grid, List } from "@raycast/api";
 
 const competitions = [
   {
-    title: "La Liga",
+    title: "LaLiga Santander",
     value: "laliga-santander",
   },
   {
-    title: "Segunda División",
+    title: "LaLiga SmartBank",
     value: "laliga-smartbank",
   },
   {
@@ -53,7 +53,6 @@ export default function CompetitionDropdown(props: {
                     key={`${competition.value}-${year}`}
                     value={`${competition.value}-${year}`}
                     title={`${competition.title} ${season}`}
-                    // title={competition.title}
                   />
                 );
               })}

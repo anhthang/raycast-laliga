@@ -2,11 +2,7 @@
 
 ## [Improvements] - 2023-02
 - Refind Fixtures & Results
-
-## [Improvements] - 2023-02-09
-
-- Live fixtures status
-- Fixtures & Results group by date
+- Use public service for standings & results, move Ocp-Apim-Subscription-Key to preference
 
 ## [Improvements] - 2023-02-09
 

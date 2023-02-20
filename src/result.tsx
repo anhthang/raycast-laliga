@@ -1,9 +1,7 @@
 import {
   Action,
   ActionPanel,
-  Color,
   Icon,
-  Image,
   List,
   showToast,
   Toast,
@@ -14,6 +12,7 @@ import groupBy from "lodash.groupby";
 import CompetitionDropdown from "./components/competition_dropdown";
 import { Match } from "./types";
 import { getCurrentGameWeek, getMatches } from "./api";
+import Matchday from "./components/matchday";
 
 export default function Fixture() {
   const [fixtures, setFixtures] = useState<Match[]>();
@@ -34,7 +33,7 @@ export default function Fixture() {
   useEffect(() => {
     if (matchday) {
       showToast({
-        title: `Getting Matchday ${matchday}`,
+        title: "Loading...",
         style: Toast.Style.Animated,
       });
       getMatches(competition, matchday).then((data) => {
@@ -51,6 +50,29 @@ export default function Fixture() {
     return format(new Date(m.date), "eee dd.MM.yyyy");
   });
 
+  const action = (
+    <ActionPanel.Section title="Matchday">
+      {matchday > 1 && (
+        <Action
+          title={`Matchday ${matchday - 1}`}
+          icon={Icon.ArrowLeftCircle}
+          onAction={() => {
+            setMatchday(matchday - 1);
+          }}
+        />
+      )}
+      {matchday < 38 && (
+        <Action
+          title={`Matchday ${matchday + 1}`}
+          icon={Icon.ArrowRightCircle}
+          onAction={() => {
+            setMatchday(matchday + 1);
+          }}
+        />
+      )}
+    </ActionPanel.Section>
+  );
+
   return (
     <List
       throttle
@@ -66,69 +88,13 @@ export default function Fixture() {
     >
       {Object.entries(days).map(([day, matches]) => {
         return (
-          <List.Section key={day} title={day}>
-            {matches.map((match) => {
-              let icon: Image.ImageLike;
-              if (match.status.toLowerCase().includes("half")) {
-                icon = { source: Icon.Livestream, tintColor: Color.Red };
-              } else if (match.status === "FullTime") {
-                icon = { source: Icon.CheckCircle, tintColor: Color.Green };
-              } else {
-                icon = Icon.Clock;
-              }
-
-              const accessories: List.Item.Accessory[] = [
-                { text: match.venue.name },
-                {
-                  icon: {
-                    source: "stadium.svg",
-                    tintColor: Color.SecondaryText,
-                  },
-                },
-              ];
-
-              return (
-                <List.Item
-                  key={match.id}
-                  title={format(new Date(match.date), "HH:mm")}
-                  subtitle={
-                    match.status === "PreMatch"
-                      ? `${match.home_team.nickname} - ${match.away_team.nickname}`
-                      : `${match.home_team.nickname} ${match.home_score} - ${match.away_score} ${match.away_team.nickname}`
-                  }
-                  icon={icon}
-                  accessories={accessories}
-                  actions={
-                    <ActionPanel>
-                      <Action.OpenInBrowser
-                        url={`https://www.laliga.com/en-GB/match/${match.slug}`}
-                      />
-                      <ActionPanel.Section title="Matchday">
-                        {matchday > 1 && (
-                          <Action
-                            title={`Matchday ${matchday - 1}`}
-                            icon={Icon.ArrowLeftCircle}
-                            onAction={() => {
-                              setMatchday(matchday - 1);
-                            }}
-                          />
-                        )}
-                        {matchday < 38 && (
-                          <Action
-                            title={`Matchday ${matchday + 1}`}
-                            icon={Icon.ArrowRightCircle}
-                            onAction={() => {
-                              setMatchday(matchday + 1);
-                            }}
-                          />
-                        )}
-                      </ActionPanel.Section>
-                    </ActionPanel>
-                  }
-                />
-              );
-            })}
-          </List.Section>
+          <Matchday
+            key={day}
+            name={day}
+            matches={matches}
+            format="HH:mm"
+            action={action}
+          />
         );
       })}
     </List>
