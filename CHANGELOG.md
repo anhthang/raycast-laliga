@@ -1,6 +1,6 @@
 # LaLiga Changelog
 
-## [Improvements] - 2023-02
+## [Improvements] - 2023-02-20
 - Refind Fixtures & Results
 - Use public service for standings & results, move Ocp-Apim-Subscription-Key to preference
 

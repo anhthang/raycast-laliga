@@ -54,12 +54,16 @@ export default function Fixture() {
         title: "Loading...",
         style: Toast.Style.Animated,
       });
-      const gameweeks = round.gameweeks.map((gw) =>
-        getMatches(competition, gw.week)
-      );
+      const gameweeks = round.gameweeks
+        .sort((a, b) => a.week - b.week)
+        .map((gw) => getMatches(competition, gw.week));
 
       Promise.all(gameweeks).then((data) => {
-        const matches = data.flat().sort((a, b) => a.id - b.id); // not sure, but need to sort here so every matches is in order
+        let matches: Match[] = [];
+        data.forEach((d) => {
+          matches = matches.concat(d);
+        });
+
         setFixtures(matches);
         showToast({
           title: "Completed",
