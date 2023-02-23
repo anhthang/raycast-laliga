@@ -46,6 +46,14 @@ export default function Matchday(props: PropsType) {
             }
             icon={icon}
             accessories={accessories}
+            keywords={[
+              match.home_team.name,
+              match.home_team.shortname,
+              match.home_team.nickname,
+              match.away_team.name,
+              match.away_team.shortname,
+              match.away_team.nickname,
+            ]}
             actions={
               <ActionPanel>
                 <Action.OpenInBrowser url={`https://www.laliga.com/en-GB/match/${match.slug}`} />
