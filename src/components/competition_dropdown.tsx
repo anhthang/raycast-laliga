@@ -15,18 +15,15 @@ const competitions = [
   },
 ];
 
-const seasons = {
-  2013: "2013/14",
-  2014: "2014/15",
-  2015: "2015/16",
-  2016: "2016/17",
-  2017: "2017/18",
-  2018: "2018/19",
-  2019: "2019/20",
-  2020: "2020/21",
-  2021: "2021/22",
-  2022: "2022/23",
-};
+const startYear = 2013;
+const today = new Date();
+const endYear = today.getMonth() > 6 ? today.getFullYear() : today.getFullYear() - 1;
+
+const seasons: { [key: number]: string } = {};
+for (let year = startYear; year <= endYear; year++) {
+  const seasonEnd = year + 1;
+  seasons[year] = `${year}/${Number(seasonEnd.toString().substring(2))}`;
+}
 
 export default function CompetitionDropdown(props: {
   type?: string;

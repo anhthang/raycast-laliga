@@ -1,5 +1,9 @@
 # LaLiga Changelog
 
+## [Improvements] - 2023-10-04
+- Add match comments
+- Generate seasons list dynamically
+
 ## [Improvements] - 2023-02-21
 
 - Refind Fixtures & Results
