@@ -133,6 +133,10 @@ export const getMatches = async (subscriptionSlug: string, week: number): Promis
 };
 
 export const getSquad = async (team: string): Promise<Squad[]> => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
   const config: AxiosRequestConfig = {
     method: "GET",
     url: `${endpoint}/teams/${team}/squad-manager`,
@@ -141,7 +145,7 @@ export const getSquad = async (team: string): Promise<Squad[]> => {
       offset: 0,
       orderField: "id",
       orderType: "DESC",
-      // seasonYear: "2021",
+      seasonYear: month < 6 ? year - 1 : year,
     },
     headers,
   };
