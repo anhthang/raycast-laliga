@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { getPreferenceValues, showToast, Toast } from "@raycast/api";
+import { getPreferenceValues } from "@raycast/api";
+import { showFailureToast } from "@raycast/utils";
 import {
   LaLigaClub,
   LaLigaClubs,
@@ -15,10 +16,6 @@ import {
   Standing,
   Team,
 } from "../types";
-
-function showFailureToast() {
-  showToast(Toast.Style.Failure, "Something went wrong", "Please try again later");
-}
 
 const { apikey } = getPreferenceValues();
 
@@ -40,7 +37,7 @@ export const getCurrentGameWeek = async (competition: string) => {
 
     return data.gameweek;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return {};
   }
@@ -65,7 +62,7 @@ export const getTeams = async (season: string): Promise<Team[]> => {
 
     return data.teams;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -83,7 +80,7 @@ export const getTeam = async (team: string) => {
 
     return data.team;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return undefined;
   }
@@ -101,7 +98,7 @@ export const getStandings = async (competition: string): Promise<Standing[]> => 
 
     return data.standings;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -126,7 +123,7 @@ export const getMatches = async (subscriptionSlug: string, week: number): Promis
 
     return data.matches;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -155,7 +152,7 @@ export const getSquad = async (team: string): Promise<Squad[]> => {
 
     return data.squads;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -173,7 +170,7 @@ export const getSubscriptionRounds = async (competition: string): Promise<Round[
 
     return data.rounds;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -194,7 +191,7 @@ export const getMatchComments = async (slug: string): Promise<MatchCommentary[]>
 
     return data.match_commentaries;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
