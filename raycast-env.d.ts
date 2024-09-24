@@ -8,7 +8,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 type ExtensionPreferences = {
-  /** Ocp-Apim-Subscription-Key - API key that used for collect data from LaLiga public services */
+  /** API Key - Your Ocp-Apim-Subscription-Key for accessing LaLiga data. */
   "apikey": string
 }
 
