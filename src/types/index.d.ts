@@ -52,6 +52,13 @@ export interface Standing {
   previous_position: number;
   difference_position: number;
   team: Team;
+  qualify?: Qualify;
+}
+
+export interface Qualify {
+  name: string;
+  shortname: string;
+  color: string;
 }
 
 export interface Team {
