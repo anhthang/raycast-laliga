@@ -1,26 +1,3 @@
-export interface LaLigaClub {
-  team: Team;
-}
-
-export interface LaLigaClubs {
-  total: number;
-  teams: Team[];
-}
-
-export interface LaLigaStanding {
-  total: number;
-  standings: Standing[];
-}
-
-export interface LaLigaMatch {
-  matches: Match[];
-}
-
-export interface LaLigaClubSquad {
-  total: number;
-  squads: Squad[];
-}
-
 export interface Match {
   id: number;
   name: string;
@@ -29,7 +6,7 @@ export interface Match {
   time: Date;
   home_score: number;
   away_score: number;
-  status: Status;
+  status: string;
   home_team: Team;
   away_team: Team;
   venue: Venue;
@@ -37,6 +14,9 @@ export interface Match {
   subscription: Subscription;
   temperature: Temperature;
   ball: Ball;
+  competitions?: Competition[];
+  opta_id: string;
+  lde_id: number;
 }
 
 export interface Standing {
@@ -81,32 +61,14 @@ export interface Team {
   phone: string;
   fax?: string;
   sprite_status: string;
-  club: Club;
+  club: Team;
   venue: Venue;
   shield: Shield;
   competitions: Competition[];
   last_main_competition: Competition;
   opta_id: string;
   lde_id: number;
-}
-
-export interface Club {
-  id: number;
-  slug: string;
-  name: string;
-  nickname: string;
-  boundname: string;
-  shortname: string;
   selector_name: string;
-  address: string;
-  foundation?: Date;
-  web: string;
-  twitter: string;
-  facebook: string;
-  instagram: string;
-  mail: string;
-  phone: string;
-  fax?: string;
   president?: string;
 }
 
@@ -155,18 +117,8 @@ export interface Country {
 
 export interface Ball {
   id: number;
-  name: BallName;
+  name: string;
   image: string;
-}
-
-export enum BallName {
-  Accelerate = "ACCELERATE",
-  Adrenalina = "ADRENALINA",
-}
-
-export enum Status {
-  FullTime = "FullTime",
-  PreMatch = "PreMatch",
 }
 
 export interface PersonsRole {
@@ -174,27 +126,9 @@ export interface PersonsRole {
   role: Role;
 }
 
-export interface Person {
-  name: string;
-  nickname: string;
-  firstname: string;
-  lastname: string;
-}
-
 export interface Role {
   id: number;
-  name: RoleName;
-}
-
-export enum RoleName {
-  Avar = "AVAR",
-  Var = "VAR",
-  ÁrbitroPrincipal = "Árbitro Principal",
-}
-
-export interface Temperature {
-  enabled_historical: boolean;
-  enabled_forecast: boolean;
+  name: string;
 }
 
 export interface Squad {
@@ -207,7 +141,7 @@ export interface Squad {
   team: Team;
   person: Person;
   role: Role;
-  photos: { [key: string]: Photo };
+  photos: Record<string, Record<string, string>>;
   opta_id: string;
   lde_id?: number;
 }
@@ -218,7 +152,7 @@ export interface Person {
   nickname: string;
   firstname: string;
   lastname: string;
-  gender: Gender;
+  gender: string;
   date_of_birth: Date;
   place_of_birth?: string;
   weight?: number;
@@ -230,25 +164,6 @@ export interface Person {
 
 export interface Country {
   id: string;
-}
-
-export enum Gender {
-  Male = "male",
-}
-
-export interface Photo {
-  "1024x1113"?: string;
-  "128x139"?: string;
-  "2048x2225"?: string;
-  "256x278"?: string;
-  "512x556"?: string;
-  "64x70"?: string;
-  "1024x1024"?: string;
-  "128x128"?: string;
-  "2048x2048"?: string;
-  "256x256"?: string;
-  "512x512"?: string;
-  "64x64"?: string;
 }
 
 export interface Position {
@@ -265,15 +180,6 @@ export interface Role {
   name: string;
   female_name: string;
   slug: string;
-}
-
-export interface LaLigaSubscription {
-  subscription: Subscription;
-}
-
-export interface LaLigaSubscriptionRounds {
-  total: number;
-  rounds: Round[];
 }
 
 export interface Subscription {
@@ -312,11 +218,6 @@ export interface CurrentGameweek {
   round?: Round;
 }
 
-export interface LaLigaMatchCommentaries {
-  total: number;
-  match_commentaries: MatchCommentary[];
-}
-
 export interface MatchCommentary {
   id: number;
   content: string;
@@ -333,17 +234,6 @@ export interface MatchCommentary {
 export interface Lineup {
   team: Match;
   person: Person;
-  opta_id: string;
-  lde_id: number;
-}
-
-export interface Person {
-  id: number;
-}
-
-export interface Match {
-  id: number;
-  competitions?: Competition[];
   opta_id: string;
   lde_id: number;
 }

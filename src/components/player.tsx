@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import json2md from "json2md";
 import { Squad } from "../types";
 
-const getFlagEmoji = (isoCode?: string) => {
+export const getFlagEmoji = (isoCode?: string) => {
   if (!isoCode) return "🏴";
 
   if (isoCode === "GB-ENG") {

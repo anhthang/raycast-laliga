@@ -38,7 +38,8 @@ const decades = [
   },
 ];
 
-const seasons: { [key: string]: { title: string; value: string }[] } = {};
+const seasons: Record<string, { title: string; value: string }[]> = {};
+
 decades.forEach(({ from, to, competitions }) => {
   if (!to) {
     const date = new Date();

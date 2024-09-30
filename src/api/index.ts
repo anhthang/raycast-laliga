@@ -1,22 +1,7 @@
 import { getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import {
-  CurrentGameweek,
-  LaLigaClub,
-  LaLigaClubs,
-  LaLigaClubSquad,
-  LaLigaMatch,
-  LaLigaMatchCommentaries,
-  LaLigaStanding,
-  LaLigaSubscriptionRounds,
-  Match,
-  MatchCommentary,
-  Round,
-  Squad,
-  Standing,
-  Team,
-} from "../types";
+import { CurrentGameweek, Match, MatchCommentary, Round, Squad, Standing, Team } from "../types";
 
 const { apikey } = getPreferenceValues();
 
@@ -59,7 +44,7 @@ export const getTeams = async (season: string): Promise<Team[]> => {
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaClubs> = await axios(config);
+    const { data }: AxiosResponse<Record<"teams", Team[]>> = await axios(config);
 
     return data.teams;
   } catch (e) {
@@ -77,7 +62,7 @@ export const getTeam = async (team: string) => {
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaClub> = await axios(config);
+    const { data }: AxiosResponse<Record<"team", Team>> = await axios(config);
 
     return data.team;
   } catch (e) {
@@ -95,7 +80,7 @@ export const getStandings = async (competition: string): Promise<Standing[]> => 
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaStanding> = await axios(config);
+    const { data }: AxiosResponse<Record<"standings", Standing[]>> = await axios(config);
 
     return data.standings;
   } catch (e) {
@@ -120,7 +105,7 @@ export const getMatches = async (subscriptionSlug: string, week: number): Promis
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaMatch> = await axios(config);
+    const { data }: AxiosResponse<Record<"matches", Match[]>> = await axios(config);
 
     return data.matches;
   } catch (e) {
@@ -149,7 +134,7 @@ export const getSquad = async (team: string): Promise<Squad[]> => {
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaClubSquad> = await axios(config);
+    const { data }: AxiosResponse<Record<"squads", Squad[]>> = await axios(config);
 
     return data.squads;
   } catch (e) {
@@ -167,7 +152,7 @@ export const getSubscriptionRounds = async (competition: string): Promise<Round[
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaSubscriptionRounds> = await axios(config);
+    const { data }: AxiosResponse<Record<"rounds", Round[]>> = await axios(config);
 
     return data.rounds;
   } catch (e) {
@@ -188,7 +173,7 @@ export const getMatchComments = async (slug: string): Promise<MatchCommentary[]>
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaMatchCommentaries> = await axios(config);
+    const { data }: AxiosResponse<Record<"match_commentaries", MatchCommentary[]>> = await axios(config);
 
     return data.match_commentaries;
   } catch (e) {
