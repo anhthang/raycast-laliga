@@ -1,7 +1,7 @@
 import { getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { CurrentGameweek, Match, MatchCommentary, Round, Squad, Standing, Team } from "../types";
+import { CurrentGameweek, Match, MatchCommentary, MatchLineup, Round, Squad, Standing, Team } from "../types";
 
 const { apikey } = getPreferenceValues();
 
@@ -10,6 +10,8 @@ const headers = {
   "Ocp-Apim-Subscription-Key": apikey,
   "Content-Language": "en",
 };
+
+const limit = 50;
 
 export const getCurrentGameWeek = async (competition: string): Promise<CurrentGameweek | undefined> => {
   const config: AxiosRequestConfig = {
@@ -35,7 +37,7 @@ export const getTeams = async (season: string): Promise<Team[]> => {
     url: `${endpoint}/teams`,
     params: {
       subscriptionSlug: season,
-      limit: 99,
+      limit,
       offset: 0,
       orderField: "nickname",
       orderType: "ASC",
@@ -97,7 +99,7 @@ export const getMatches = async (subscriptionSlug: string, week: number): Promis
     params: {
       subscriptionSlug,
       week,
-      limit: 100,
+      limit,
       orderField: "date",
       orderType: "asc",
     },
@@ -124,7 +126,7 @@ export const getSquad = async (team: string): Promise<Squad[]> => {
     method: "GET",
     url: `${endpoint}/teams/${team}/squad-manager`,
     params: {
-      limit: 50,
+      limit,
       offset: 0,
       orderField: "id",
       orderType: "DESC",
@@ -162,23 +164,45 @@ export const getSubscriptionRounds = async (competition: string): Promise<Round[
   }
 };
 
-export const getMatchComments = async (slug: string): Promise<MatchCommentary[]> => {
+export const getMatchComments = async (slug: string, page: number) => {
+  const offset = page * limit;
+
   const config: AxiosRequestConfig = {
     method: "GET",
     url: `${endpoint}/matches/${slug}/comments`,
     headers,
     params: {
-      limit: 100,
+      limit,
+      offset,
     },
   };
 
   try {
-    const { data }: AxiosResponse<Record<"match_commentaries", MatchCommentary[]>> = await axios(config);
+    const { data }: AxiosResponse<{ total: number; match_commentaries: MatchCommentary[] }> = await axios(config);
 
-    return data.match_commentaries;
+    return { data: data.match_commentaries, hasMore: offset + data.match_commentaries.length < data.total };
   } catch (e) {
     showFailureToast(e);
 
-    return [];
+    return { data: [], hasMore: false };
+  }
+};
+
+export const getMatchLineups = async (slug: string) => {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `${endpoint}/matches/${slug}/lineups`,
+    headers,
+  };
+
+  try {
+    const { data }: AxiosResponse<{ [key in "home_team_lineups" | "away_team_lineups"]: MatchLineup[] }> =
+      await axios(config);
+
+    return data;
+  } catch (e) {
+    showFailureToast(e);
+
+    return undefined;
   }
 };

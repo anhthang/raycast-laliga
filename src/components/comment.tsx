@@ -3,10 +3,19 @@ import { usePromise } from "@raycast/utils";
 import { getMatchComments } from "../api";
 
 export default function MatchComments(props: { slug: string; name: string }) {
-  const { data: comments, isLoading } = usePromise(getMatchComments, [props.slug]);
+  const {
+    data: comments,
+    isLoading,
+    pagination,
+  } = usePromise(
+    (slug) =>
+      ({ page = 0 }) =>
+        getMatchComments(slug, page),
+    [props.slug],
+  );
 
   return (
-    <List navigationTitle={`Comments | ${props.name}`} isLoading={isLoading}>
+    <List navigationTitle={`Comments | ${props.name}`} isLoading={isLoading} pagination={pagination}>
       {comments?.map((comment) => {
         return (
           <List.Item

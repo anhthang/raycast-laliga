@@ -9,12 +9,18 @@ export interface Match {
   status: string;
   home_team: Team;
   away_team: Team;
+  match_winner_team: Team;
+  home_formation: string;
+  away_formation: string;
+  gameweek: Gameweek;
   venue: Venue;
   persons_role: PersonsRole[];
+  season: unknown;
   subscription: Subscription;
   temperature: Temperature;
   ball: Ball;
   competitions?: Competition[];
+  is_brand_day: boolean;
   opta_id: string;
   lde_id: number;
 }
@@ -124,6 +130,8 @@ export interface Ball {
 export interface PersonsRole {
   person: Person;
   role: Role;
+  opta_id: string;
+  lde_id: number;
 }
 
 export interface Role {
@@ -191,8 +199,8 @@ export interface Subscription {
   year: number;
   teams: Team[];
   rounds: Round[];
-  current_gameweek: CurrentGameweek;
-  current_gameweek_standing: CurrentGameweek;
+  current_gameweek: Gameweek;
+  current_gameweek_standing: Gameweek;
   competition: Competition;
 }
 
@@ -204,12 +212,12 @@ export interface Round {
   has_groups: boolean;
   type: string;
   status: string;
-  gameweeks: CurrentGameweek[];
+  gameweeks: Gameweek[];
   groups: unknown;
   num_gameweeks?: number;
 }
 
-export interface CurrentGameweek {
+export interface Gameweek {
   id: number;
   week: number;
   name: string;
@@ -227,18 +235,25 @@ export interface MatchCommentary {
   period: string;
   match_comment_kind: MatchCommentKind;
   match: Match;
-  lineup?: Lineup;
-  lineup_ref_second?: Lineup;
-}
-
-export interface Lineup {
-  team: Match;
-  person: Person;
-  opta_id: string;
-  lde_id: number;
+  lineup?: MatchLineup;
+  lineup_ref_second?: MatchLineup;
 }
 
 export interface MatchCommentKind {
   id: number;
   name: string;
+}
+
+export interface MatchLineup {
+  id: number;
+  position: number;
+  captain: boolean;
+  team: Team;
+  person: Person;
+  photos: Record<string, Record<string, string>>;
+  opta_id: string;
+  lde_id?: number;
+  shirt_number?: number;
+  status?: string;
+  formation_place?: number;
 }
