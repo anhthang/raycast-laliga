@@ -27,6 +27,11 @@ export interface Match {
   lde_id: number;
 }
 
+export interface MatchPreviousNext {
+  previous_matches: Match[];
+  next_matches: Match[];
+}
+
 export interface Standing {
   played: number;
   points: number;

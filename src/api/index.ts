@@ -1,7 +1,17 @@
 import { getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { Gameweek, Match, MatchCommentary, MatchLineup, Round, Squad, Standing, Team } from "../types";
+import {
+  Gameweek,
+  Match,
+  MatchCommentary,
+  MatchLineup,
+  MatchPreviousNext,
+  Round,
+  Squad,
+  Standing,
+  Team,
+} from "../types";
 
 const { apikey } = getPreferenceValues();
 
@@ -114,6 +124,34 @@ export const getMatches = async (subscriptionSlug: string, week: number): Promis
     showFailureToast(e);
 
     return [];
+  }
+};
+
+export const getPrevNextMatches = async (
+  team: string,
+  subscriptionSlug: string,
+): Promise<MatchPreviousNext | undefined> => {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `${endpoint}/matches/${team}/nextpreviousmatches`,
+    params: {
+      subscriptionSlug,
+      previousLimit: 5,
+      nextLimit: 1,
+      previousOrderField: "date",
+      previousOrderType: "desc",
+    },
+    headers,
+  };
+
+  try {
+    const { data }: AxiosResponse<Record<"match_previous_next", MatchPreviousNext>> = await axios(config);
+
+    return data.match_previous_next;
+  } catch (e) {
+    showFailureToast(e);
+
+    return undefined;
   }
 };
 
