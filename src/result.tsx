@@ -6,7 +6,7 @@ import { useState } from "react";
 import { getCurrentGameWeek, getMatches } from "./api";
 import CompetitionDropdown from "./components/competition_dropdown";
 import Matchday from "./components/matchday";
-import { CurrentGameweek } from "./types";
+import { Gameweek } from "./types";
 
 export default function Fixture() {
   const [competition, setCompetition] = useState<string>("");
@@ -18,7 +18,7 @@ export default function Fixture() {
     },
     [competition],
     {
-      onData: (gameweek: CurrentGameweek | undefined) => {
+      onData: (gameweek: Gameweek | undefined) => {
         setMatchday(gameweek?.week ?? 0);
       },
     },

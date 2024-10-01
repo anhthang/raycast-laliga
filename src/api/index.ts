@@ -1,7 +1,7 @@
 import { getPreferenceValues } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { CurrentGameweek, Match, MatchCommentary, MatchLineup, Round, Squad, Standing, Team } from "../types";
+import { Gameweek, Match, MatchCommentary, MatchLineup, Round, Squad, Standing, Team } from "../types";
 
 const { apikey } = getPreferenceValues();
 
@@ -13,7 +13,7 @@ const headers = {
 
 const limit = 50;
 
-export const getCurrentGameWeek = async (competition: string): Promise<CurrentGameweek | undefined> => {
+export const getCurrentGameWeek = async (competition: string): Promise<Gameweek | undefined> => {
   const config: AxiosRequestConfig = {
     method: "GET",
     url: `${endpoint}/subscriptions/${competition}/current-gameweek`,
@@ -188,7 +188,7 @@ export const getMatchComments = async (slug: string, page: number) => {
   }
 };
 
-export const getMatchLineups = async (slug: string) => {
+export const getMatchLineups = async (slug: string): Promise<MatchLineup[]> => {
   const config: AxiosRequestConfig = {
     method: "GET",
     url: `${endpoint}/matches/${slug}/lineups`,
@@ -199,10 +199,10 @@ export const getMatchLineups = async (slug: string) => {
     const { data }: AxiosResponse<{ [key in "home_team_lineups" | "away_team_lineups"]: MatchLineup[] }> =
       await axios(config);
 
-    return data;
+    return data.home_team_lineups.concat(data.away_team_lineups);
   } catch (e) {
     showFailureToast(e);
 
-    return undefined;
+    return [];
   }
 };

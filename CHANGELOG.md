@@ -1,5 +1,8 @@
 # LaLiga Changelog
 
+## [Enhanced Match Information] - {PR_MERGED_DATE}
+- Added match lineups to provide detailed information about the starting players and substitutes for each team.
+
 ## [Enhanced Standings & Performance] - 2024-09-24
 - Updated standings to always show detailed statistics, including points, goal difference, and head-to-head records.
 - Enhanced code maintainability and efficiency by utilizing the `usePromise` hook for asynchronous operations.
