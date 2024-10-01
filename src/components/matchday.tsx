@@ -1,5 +1,5 @@
 import { Action, ActionPanel, Color, Icon, Image, List } from "@raycast/api";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 import { Match } from "../types";
 import MatchComments from "./comment";
 import MatchLineups from "./lineup";
@@ -35,7 +35,7 @@ export default function Matchday(props: PropsType) {
           },
         ];
 
-        const title = match.time ? format(new Date(match.date), props.format || "eee dd.MM.yyyy HH:mm") : "TBC";
+        const title = match.time ? formatDate(match.date, props.format || "eee dd.MM.yyyy HH:mm") : "TBC";
 
         const matchName =
           match.status === "PreMatch"

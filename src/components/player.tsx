@@ -1,5 +1,5 @@
 import { Action, ActionPanel, Detail } from "@raycast/api";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 import json2md from "json2md";
 import { Squad } from "../types";
 
@@ -42,13 +42,10 @@ export default function Player(squad: Squad) {
             icon={getFlagEmoji(squad.person.country?.id)}
             text={squad.person.country?.id}
           />
-          <Detail.Metadata.Label
-            title="Date of Birth"
-            text={format(new Date(squad.person.date_of_birth), "dd/MM/yyyy")}
-          />
+          <Detail.Metadata.Label title="Date of Birth" text={formatDate(squad.person.date_of_birth, "dd/MM/yyyy")} />
           <Detail.Metadata.Label title="Place of Birth" text={squad.person.place_of_birth} />
-          <Detail.Metadata.Label title="Height (cm)" text={squad.person.height?.toString()} />
-          <Detail.Metadata.Label title="Weight (kg)" text={squad.person.weight?.toString()} />
+          <Detail.Metadata.Label title="Height" text={`${squad.person.height}cm`} />
+          <Detail.Metadata.Label title="Weight" text={`${squad.person.weight}kg`} />
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label title="Position" text={squad.position.name} />
           <Detail.Metadata.Label title="Shirt Number" text={squad.shirt_number?.toString()} />
