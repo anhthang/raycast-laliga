@@ -35,7 +35,9 @@ export default function Matchday(props: PropsType) {
           },
         ];
 
-        const title = match.time ? formatDate(match.date, props.format || "eee dd.MM.yyyy HH:mm") : "TBC";
+        const title = match.time
+          ? formatDate(match.date, props.format || "eee dd.MM.yyyy HH:mm")
+          : "TBC";
 
         const matchName =
           match.status === "PreMatch"
@@ -63,14 +65,18 @@ export default function Matchday(props: PropsType) {
                   <Action.Push
                     title="Comments"
                     icon={Icon.Message}
-                    target={<MatchComments slug={match.slug} name={matchName} />}
+                    target={
+                      <MatchComments slug={match.slug} name={matchName} />
+                    }
                   />
                   <Action.Push
                     title="Lineups"
                     icon={Icon.TwoPeople}
                     target={<MatchLineups slug={match.slug} name={matchName} />}
                   />
-                  <Action.OpenInBrowser url={`https://www.laliga.com/en-GB/match/${match.slug}`} />
+                  <Action.OpenInBrowser
+                    url={`https://www.laliga.com/en-GB/match/${match.slug}`}
+                  />
                 </ActionPanel.Section>
                 {props.action}
               </ActionPanel>
