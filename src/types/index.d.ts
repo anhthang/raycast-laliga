@@ -2,7 +2,7 @@ export interface Match {
   id: number;
   name: string;
   slug: string;
-  date: Date;
+  date?: Date;
   time: Date;
   home_score: number;
   away_score: number;

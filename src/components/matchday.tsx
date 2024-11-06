@@ -35,12 +35,12 @@ export default function Matchday(props: PropsType) {
           },
         ];
 
-        const title = match.time
+        const title = match.date
           ? formatDate(match.date, props.format || "eee dd.MM.yyyy HH:mm")
           : "TBC";
 
         const matchName =
-          match.status === "PreMatch"
+          match.status === "PreMatch" || match.status === "Canceled"
             ? `${match.home_team.nickname} - ${match.away_team.nickname}`
             : `${match.home_team.nickname} ${match.home_score} - ${match.away_score} ${match.away_team.nickname}`;
 

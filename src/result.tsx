@@ -30,7 +30,7 @@ export default function Fixture() {
   );
 
   const days = groupBy(fixtures, (m) => {
-    return formatDate(m.date, "eee dd.MM.yyyy");
+    return m.date ? formatDate(m.date, "eee dd.MM.yyyy") : "Postponed";
   });
 
   const action = (
