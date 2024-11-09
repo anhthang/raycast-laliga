@@ -37,5 +37,3 @@ declare namespace Arguments {
   export type Club = {}
 }
 
-
-
