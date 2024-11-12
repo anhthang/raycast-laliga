@@ -1,6 +1,6 @@
 # LaLiga Changelog
 
-## [Enhanced Match Information] - {PR_MERGED_DATE}
+## [Enhanced Match Information] - 2024-11-06
 - Added match lineups to provide detailed information about the starting players and substitutes for each team.
 - Included upcoming and previous matches directly in the standings view for easier navigation.
 
